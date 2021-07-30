@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% block title %} Blogpost{% endblock title %}
+{% block body %}
+
+
+{% load humanize %}
+{% load extras %}
+<div class="container my-3">
+    <h2 class="blog-post-title">{{post.title}}</h2>
+    <p class="blog-post-meta">{{post.timeStamp}} by <a href="/about">{{post.author}}</a> (<span> {{post.views}}
+            views</span>) Time: <span class="display">
+        </span></p>
+
+
+
+    <script>
+        setInterval(function () {
+            const clock = document.querySelector(".display");
+            let time = new Date();
+            let sec = time.getSeconds();
+            let min = time.getMinutes();
+            let hr = time.getHours();
+            let day = 'AM';
+            if (hr > 12) {
+                day = 'PM';
+                hr = hr - 12;
+            }
+            if (hr == 0) {
+                hr = 12;
+            }
+            if (sec < 10) {
+                sec = '0' + sec;
+            }
+            if (min < 10) {
+                min = '0' + min;
+            }
+            if (hr < 10) {
+                hr = '0' + hr;
+            }
+            clock.textContent = hr + ':' + min + ':' + sec + " " + day;
+        });
+    </script>
+
+    <p>{{post.content|safe}}</p>
+    <hr>
+</div>
+<div class="container stcontainer my-4">
+    <h2> Comments ({{comments.count}}) </h2>
+    <div class="my-2">
+        {% if user.is_authenticated %}
+        <form action="/blog/postComment" method="post">
+            {% csrf_token %}
+            <label for="exampleInputEmail1">Post Comment </label>
+            <div class="row">
+                <div class="col-12 col-md-10 col-lg-10  ">
+                    <input type="text" class="form-control" name="comment" placeholder="Enter comment here">
+                    <input type="hidden" name="postSno" value="{{post.sno}}">
+                    <input type="hidden" name="parentSno" value="">
+                </div>
+                <div class="col-12 col-md-2 col-lg-2 ">
+                    <button type="submit" class="btn btn-outline-primary">Submit</button>
+                </div>
+            </div>
+
+
+        </form>
+        {% else %}
+        Please login to post a comment
+        {% endif %}
+    </div>
+    {% for comment in comments %}
+    <div class="row my-3">
+        <div class="col-md-1 stuserpic">
+            <!-- <img class="rounded mx-auto d-block w-100 border border-dark p-2" src="/static/img/user.png" alt="user"> -->
+            <img class="strounded " src="/static/img/user.png" alt="user">
+        </div>
+        <div class="col-md-11  ">
+            <b class="stusername"> {{comment.user.username}} </b>
+            <span class="badge badge-secondary ">{{comment.timestamp|naturaltime}}</span>
+            <p class="stcomemnt stcomemnt1 alert-warning text-dark">{{comment.comment}}</p>
+            <div class="reply mx-0">
+                {% if user.is_authenticated %}
+                <button class="btn btn-sm btn-primary " type="button" data-toggle="collapse"
+                    data-target="#replyBox{{comment.sno}}" aria-expanded="false"
+                    aria-controls="replyBox{{comment.sno}}">
+                    Reply
+                </button>
+                <div class="collapse" id="replyBox{{comment.sno}}">
+                    <div class="card card-body my-2">
+                        <form action="/blog/postComment" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-12 col-md-10 col-lg-10  ">
+                                        <!-- <label for="comment">Post a reply {{comment.user.username}}</label> -->
+                                        <textarea cols="2" rows="1" type="text" class="form-control" name="comment"
+                                            placeholder="Enter comment here">@{{comment.user.username}}: </textarea>
+                                    </div>
+                                    <div class="col-12 col-md-2 col-lg-2 ">
+                                        <input type="hidden" name="parentSno" value="{{comment.sno}}">
+                                        <input type="hidden" name="postSno" value="{{post.sno}}">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% else %}
+                <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse"
+                    data-target="#replyBox{{comment.sno}}" aria-expanded="false"
+                    aria-controls="replyBox{{comment.sno}}">
+                    Login to reply
+                </button>
+                {% endif %}
+                <div class="replies my-1 ">
+                    {% for reply in replyDict|get_val:comment.sno %}
+
+                    <div class="row my-2">
+                        <div class="col-md-1 ">
+                            <img class="strounded-reply" src="/static/img/user.png" alt="user">
+                        </div>
+                        <div class="col-md-11">
+                            <div class="col-md-11 ">
+                                <b> {{reply.user.username}} </b>
+                                <span class="badge badge-secondary ">{{reply.timestamp|naturaltime}}</span>
+                                <div>{{reply.comment}}</div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse"
+                        data-target="#replyBox{{comment.sno}}" aria-expanded="false"
+                        aria-controls="replyBox{{comment.sno}}">
+                        Reply
+                    </button>
+                    <div class="collapse" id="replyBox{{comment.sno}}{{comments.count}}">
+                        <div class="card card-body my-2">
+                            <form action="/blog/postComment" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 col-md-10 col-lg-10  ">
+                                            <!-- <label for="comment">Post a reply {{comment.user.username}}</label> -->
+                                            <textarea cols="2" rows="1" type="text" class="form-control" name="comment"
+                                                placeholder="Enter comment here">@{{comment.user.username}}: </textarea>
+                                        </div>
+                                        <div class="col-12 col-md-2 col-lg-2 ">
+                                            <input type="hidden" name="parentSno" value="{{comment.sno}}">
+                                            <input type="hidden" name="postSno" value="{{post.sno}}">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .stusername {
+            color: #f3f3f3;
+        }
+
+        .stcontainer {
+            background-color: rgb(82, 77, 77);
+            color: #d9d9d9;
+            border-radius: 2px;
+            border: 2px solid blue;
+        }
+
+        .strounded {
+            background: #1111;
+            border-radius: 54px;
+            height: 65px;
+        }
+
+        .strounded-reply {
+            background: #1111;
+            border-radius: 34px;
+            height: 65px;
+        }
+
+        .form-control {
+            width: 99%;
+        }
+
+        .stcomemnt {
+            color: #fff;
+            border-radius: 21px;
+            padding: 20px;
+        }
+
+        .replies {
+            padding: 20px;
+            margin-left: 52px;
+            margin-right: 52px;
+            border: 2px solid blue;
+            border-radius: 20px;
+        }
+    </style>
+    {% endfor %}
+</div>
+{% endblock %}

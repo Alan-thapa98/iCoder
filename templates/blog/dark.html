@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="statick">
+    <link rel="stylesheet" href="../static/js/jquery-3.5.1.min.js">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+
+<body>
+    <div class="button">
+        <div class="center">
+            <input type="checkbox">
+        </div>
+
+    </div>
+
+    <h2>Animation Dark mode Button wth css</h2>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi iste odit earum mollitia commodi, quia
+        voluptas
+        minima ab. Rem illo quae labore consequatur aliquam corporis sapiente nemo, animi dolorum ipsum quam voluptatem
+        vel quos
+        earum. Hic, quaerat quis. Cumque, deserunt quibusdam, dicta deleniti impedit magnam provident iste beatae
+        facilis fugiat
+        ullam labore pariatur, nostrum inventore voluptate libero non quia. A aliquid explicabo corporis deleniti
+        temporibus
+        magni accusantium doloribus reprehenderit quia soluta veniam, impedit dolorem, enim obcaecati quaerat officiis
+        vero
+        repellendus labore. Tempora laudantium modi suscipit voluptatibus? Numquam placeat maxime dolor, eveniet eum
+        commodi
+        hic. Minus totam ipsam consequuntur voluptas! Sit? Cum ipsa, cumque odio harum pariatur dignissimos saepe
+        consectetur amet incidunt magnam possimus facilis dicta provident accusamus blanditiis? Corrupti minima
+        molestias amet.
+
+    </p>
+    <h2>thses is hs tage of the html</h2>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laborum quo aperiam ea odio hic a magnam! Eligendi,
+        iusto! Nihil aspernatur delectus assumenda fugit facere est, cum animi modi corrupti, adipisci necessitatibus
+        saepe ratione iure doloremque ut quis ipsa quae. Praesentium perferendis unde quibusdam veritatis suscipit,
+        iusto laudantium saepe nihil sapiente ipsa sit eligendi aliquid? Animi, soluta et. Illum, iusto. Voluptatum iure
+        expedita minima laborum, voluptas quae eaque accusantium temporibus, corrupti quos excepturi. Nobis doloremque,
+        ratione ex fugit eius quo culpa excepturi minima consequuntur cumque repudiandae quidem aliquid vel delectus
+        dolorem ipsam iste, commodi voluptatum. Delectus iure libero quidem laboriosam! Animi recusandae maxime, eius
+        blanditiis, ipsa laborum perferendis veniam dolorum illo, est aliquam minima. Libero eos veniam, sint,
+        reiciendis vero quos perspiciatis ab rem ad cupiditate officia incidunt magnam delectus labore. Minima
+        provident, repudiandae porro corporis distinctio voluptas soluta saepe minus harum nisi quo deserunt,
+        consequuntur facere? Maiores animi, aliquam autem repellendus accusamus distinctio optio repudiandae vitae
+        dolorum atque doloremque, modi quod porro magni doloribus ipsum suscipit aperiam iusto itaque dolores vel? Neque
+        aliquid necessitatibus fuga atque adipisci incidunt quibusdam possimus perspiciatis, ab iste consequuntur
+        repudiandae, ex consectetur, commodi totam repellat ipsa aliquam dolor unde fugiat. Exercitationem impedit
+        inventore numquam. Nisi!</p>
+
+    <style>
+        input:checked::before {
+            left: 14px;
+        }
+
+        input:checked {
+            background: #00d2e6;
+        }
+
+        h1 {
+            line-height: 80px;
+            padding: 0 40px;
+            font-size: 45px;
+
+        }
+
+        h1 {
+            line-height: 80px;
+            padding: 10 50px;
+
+        }
+
+        p {
+            padding: 0 50px 20px 50px;
+            font-size: 19px;
+        }
+
+        .active {
+            background: #323232;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            transition: .7s ease;
+            content: "•";
+            margin: 0 4px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $('input').click(function () {
+                $('body').toggleClass('active')
+            });
+        });
+    </script>
+</body>
+
+</html>
