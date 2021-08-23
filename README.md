@@ -1,2 +1,2 @@
 # iCoder
-These is the blogging web-application
+These is  blogging web-application
